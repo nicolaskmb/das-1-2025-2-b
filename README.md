@@ -27,6 +27,23 @@ facilita o reuse e teste de uma classe
 
 acoplamento
 
+aula 07/08
+
+é programar orientado a objeto da melhor forma possivel, 
+
+single responsability, este principio é uma aplicacao direta da ideia de coesao. Cada classe deve ter apenas um motivo para ser modificado. Deve também separar apresentação de regras de negócio.
+
+toda comunicaçao do nosso sistema deveria ter uma interface e toda interface deveria ter uma unica responsabilidade
+
+
+anotação importante:
+
+assossiação - reta fechada
+
+heranca - reta aberta
+
+interface - pontilhada aberta
+
 
 
 
