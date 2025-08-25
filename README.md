@@ -1,83 +1,88 @@
-# das-1-2025-2-b
+# DAS-1-2025-2-B
 
-[Livro Eng Soft Moderna - Cap 5](https://engsoftmoderna.info/cap5.html)
+## Aulas
 
-aula 31/07
+### Aula 31/07
 
-# Software
+#### Software
+- O software surgiu para resolver problemas.
+- Ele abstrai algo complexo em código para resolver problemas reais.
 
-o software surgiu para resolver problemas, o que ele faz é abstrair algo complexo em código para resolver problemas reais
+---
 
-# Abstração
+#### Abstração
+- **Entidade**: abstrai os dados das entidades.  
+- **Repositório**: abstrai o banco de dados.  
+- **Service**: abstrai as lógicas de negócio.  
+- **Control**: abstrai as funcionalidades do backend.  
 
-entidade - abstrai os dados das entidades.
-repositorio - abstrai o banco de dados.
-service - abstrai as logicas de negocio.
-control - abstrai as funcionalidades do backend.
-a abstração é uma representação simplificada de uma entidade, ou seja entender um problema real e representar ele num codigo para resolve-lo.
+**Resumo:** abstração é uma representação simplificada de uma entidade.  
+Ou seja, entender um problema real e representá-lo em código para resolvê-lo.
 
-# Complexidade
+---
 
-por que complexidade é ruim?
-mais facil ter erro, mais dificil implementar algo, dificil encontrar erros, mais dificil de programar quanto maior a complexidade do software, etc.
-O objetivo da orientação a objetos é escapar da complexidade decompondo o problema em partes menores, deixar tudo num lugar só é considerada uma pratica antiga e em des uso.
+#### Complexidade
+**Por que a complexidade é ruim?**  
+- Mais fácil ter erros.  
+- Mais difícil implementar algo.  
+- Dificulta encontrar falhas.  
+- Aumenta a dificuldade de programação quanto maior a complexidade.  
 
-usamos objetos para representar tudo de um sistema, dados, logicas, banco, interfaces, tela, etc.
-objetos poderão ter os atributos, métodos, até mesmo objetos dentro deles, etc.
+**Objetivo da OO:** escapar da complexidade decompondo o problema em partes menores.  
+Deixar tudo em um lugar só é prática antiga e em desuso.
 
---
+**Objetos representam:**  
+- Dados  
+- Lógicas  
+- Banco de dados  
+- Interfaces  
+- Telas  
+- Podem conter atributos, métodos e até outros objetos.
 
-# O que é polimorfismo?
+---
 
---
+#### Más Práticas (Conjunto)
+- Uso inconsistente de padrões de nomes para variáveis (ex: camelCase vs snake_case).  
+- Uso de frameworks diferentes (ou versões diferentes) em partes distintas do sistema.  
+- Resolver problemas semelhantes com estruturas de dados diferentes sem justificativa.  
+- Acesso inconsistente a informações: em um ponto, direto de arquivo de configuração; em outro, via parâmetro.  
 
-# Conjunto de más praticas: 
+**Dica:** é mais importante **saber bem um framework** do que saber pouco de vários.
 
-Quando uma parte do sistema usa um padrão de nomes para variáveis (por exemplo, camel case, como em notaTotal), enquanto em outra parte usa-se um outro padrão (por exemplo, snake case, como em nota_total).
+---
 
-Quando uma parte do sistema usa um determinado framework para manipulação de páginas Web, enquanto em outra parte usa-se um segundo framework ou então uma versão diferente do primeiro framework.
+#### Ocultamento
+- Projetamos sistemas abstraindo e escondendo a complexidade atrás de uma **API**.  
+- A classe em OOP esconde informações usando **private**.  
+- **Encapsulamento** é realizado por meio de **getters e setters** para proteger informações.  
 
-Quando em uma parte do sistema resolve-se um problema usando-se uma estrutura de dados X, enquanto que, em outra parte, um problema parecido é resolvido por meio de uma estrutura Y.
+**Benefícios (Paved Roads):**  
+- **Desenvolvimento em paralelo**: equipes diferentes podem implementar classes sem conhecer todos os detalhes. Um dos motivos da existencia da programação orientada a objetos é possibilitar que a gente crie caixa com conhecimento e elas guardam duas coisas importantes, estado e comportamento, ou seja, a caixa é uma classe. toda vez que você guardda um estado ou comportamento dentro de uma classe você está faznedo o ocultamento dessas informações.
 
-Quando funções de uma parte do sistema que precisam de uma determinada informação — por exemplo, o endereço de um servidor — a obtém diretamente de um arquivo de configuração. Porém, em outras funções, de outras partes do sistema, a mesma informação deve ser passada como parâmetro.
+Isto possibilita a gente quebrar o sistema e organizar ela em diferentes camadas, minimizando o impacto numa para outra.
+- **Flexibilidade a mudanças**: fácil substituir uma classe problemática sem afetar o resto do sistema.
 
---
+- **Facilidade de entendimento**: novos devs podem se concentrar apenas nas classes relevantes.  Ao quebrarmos o codigo em diversos pedaços pequenos e cada um tem sua responsabilidade, deixamos o codigo mais compreensivel, claro que isso exige que tenhamos uma visão macro da arquitetura do sistema, e façamos uma analise top down.
 
-aprender um framework é importante, saiba bem um framework em vez de saber pouco de varios.
+---
 
---
+### AULA 04/08
 
-# Ocultamento
+COESÃO. ACOMPLAMENTO E SOLID
 
-A gente projeta os sistemas, faz abstração e esconde atrás de uma API, o nosso sistema. Então a gente está ocultando as informações, a complexidade e expondo através de uma interface.
+coesão e uma caracteristicas que buscamos enquanto estamaos programando. A implementação de qualquer classe deve ser coesa, isto é, toda classe deve implementar uma única funcionalidade ou serviço bem. Especificamente, todos os métodos e atributos de uma classe devem estar voltados para a implementação do mesmo serviço.
 
-a classe em OOP faz a esconde as informações, private.
+deve se manter um bom senso ao usar a coesão para nao deixar o codigo extremameto fragmentado criando metodos para todas as coisas ou todo misturado, deixando de criar metodos.
 
-paved roads o que é?
+o metodo deve sempre fazer UMA coisa bem feita.
 
-Desenvolvimento em paralelo. Suponha que um sistema X foi implementado por meio de classes C1, C2, …, Cn. Quando essas classes ocultam suas principais informações, fica mais fácil implementá-las em paralelo, por desenvolvedores diferentes. Consequentemente, teremos uma redução no tempo total de implementação do sistema.
+Coesão tem as seguintes vantagens:
 
-Flexibilidade a mudanças. Por exemplo, suponha que descobrimos que a classe Ci é responsável pelos problemas de desempenho do sistema. Quando detalhes de implementação de Ci são ocultados do resto do sistema, fica mais fácil trocar sua implementação por uma classe Ci', que use estruturas de dados e algoritmos mais eficientes. Essa troca também é mais segura, pois como as classes são independentes, diminui-se o risco de a mudança introduzir bugs em outras classes.
+Facilita a implementação de uma classe, bem como o seu entendimento e manutenção.
 
-Facilidade de entendimento. Por exemplo, um novo desenvolvedor contratado pela empresa pode ser alocado para trabalhar em algumas classes apenas. Portanto, ele não precisará entender toda a complexidade do sistema, mas apenas a implementação das classes pelas quais ficou responsável.
+Facilita a alocação de um único responsável por manter uma classe.
 
-getters e setters servem para encapsular e proteger as informações
-
-continuação...
-
-# anotações para mim
-
-[Livro Eng Soft Moderna - Cap 5](https://engsoftmoderna.info/cap5.html)
-
-Livro importante: Codigo Limpo (Clean code)
-
-talvez estudar sap abap? kk
-
-estudar grafos!
-
-aula 04/08
-
-coesão
+Facilita o reúso e teste de uma classe, pois é mais simples reusar e testar uma classe coesa do que uma classe com várias responsabilidades.
 
 coesão é uma caracteristica que se deve buscar enquanto estamos programando, cada classe deve ter uma unica responsabilidade.
 facilita a implementação de uma classe, assim como seu entendimento e manutenção
@@ -85,6 +90,8 @@ facilita a alocação de um responsavel para cada classe
 facilita o reuse e teste de uma classe
 
 acoplamento
+
+exemplo USB, podemos arrancar um mouse...
 
 aula 07/08
 
@@ -102,6 +109,19 @@ assossiação - reta fechada
 heranca - reta aberta
 
 interface - pontilhada aberta
+
+## Anotações Pessoais
+- Reforçar estudo em:
+  - Livro *Clean Code*
+  - Grafos
+  - (Talvez SAP ABAP)
+  - O que é polimorfismo?
+
+---
+
+## Referências e Leituras
+- [Livro Eng Soft Moderna - Capítulo 5](https://engsoftmoderna.info/cap5.html)
+- Livro importante: *Código Limpo (Clean Code)*
 
 
 
