@@ -5,124 +5,158 @@
 ### Aula 31/07
 
 #### Software
-- O software surgiu para resolver problemas.
-- Ele abstrai algo complexo em código para resolver problemas reais.
+O software surgiu para resolver problemas, abstraindo elementos complexos em código para tratar situações reais.
 
 ---
 
 #### Abstração
 - **Entidade**: abstrai os dados das entidades.  
 - **Repositório**: abstrai o banco de dados.  
-- **Service**: abstrai as lógicas de negócio.  
+- **Service**: abstrai as regras de negócio.  
 - **Control**: abstrai as funcionalidades do backend.  
 
-**Resumo:** abstração é uma representação simplificada de uma entidade.  
-Ou seja, entender um problema real e representá-lo em código para resolvê-lo.
+**Resumo:** abstração é a representação simplificada de um problema real em código.
 
 ---
 
 #### Complexidade
 **Por que a complexidade é ruim?**  
-- Mais fácil ter erros.  
-- Mais difícil implementar algo.  
-- Dificulta encontrar falhas.  
-- Aumenta a dificuldade de programação quanto maior a complexidade.  
+- Aumenta as chances de erro.  
+- Dificulta implementação, manutenção e detecção de falhas.  
+- Quanto maior a complexidade, mais difícil é programar.  
 
-**Objetivo da OO:** escapar da complexidade decompondo o problema em partes menores.  
-Deixar tudo em um lugar só é prática antiga e em desuso.
+**Objetivo da OO:** reduzir a complexidade dividindo o problema em partes menores.  
+Manter tudo em um único lugar é uma prática antiga e obsoleta.
 
-**Objetos representam:**  
-- Dados  
-- Lógicas  
-- Banco de dados  
-- Interfaces  
-- Telas  
-- Podem conter atributos, métodos e até outros objetos.
+**Objetos representam:** dados, lógica, banco de dados, interfaces e telas. Podem conter atributos, métodos e até outros objetos.
 
 ---
 
-#### Más Práticas (Conjunto)
-- Uso inconsistente de padrões de nomes para variáveis (ex: camelCase vs snake_case).  
-- Uso de frameworks diferentes (ou versões diferentes) em partes distintas do sistema.  
+#### Más Práticas
+- Uso inconsistente de padrões de nomenclatura (camelCase vs snake_case).  
+- Uso de frameworks diferentes ou de versões distintas em partes do sistema.  
 - Resolver problemas semelhantes com estruturas de dados diferentes sem justificativa.  
-- Acesso inconsistente a informações: em um ponto, direto de arquivo de configuração; em outro, via parâmetro.  
+- Acesso inconsistente a informações (ora por arquivo de configuração, ora por parâmetro).  
 
-**Dica:** é mais importante **saber bem um framework** do que saber pouco de vários.
+**Dica:** é melhor dominar bem um framework do que conhecer superficialmente vários.
 
 ---
 
 #### Ocultamento
-- Projetamos sistemas abstraindo e escondendo a complexidade atrás de uma **API**.  
-- A classe em OOP esconde informações usando **private**.  
-- **Encapsulamento** é realizado por meio de **getters e setters** para proteger informações.  
+- Em OOP, a complexidade é escondida por meio de **APIs** e modificadores de acesso (**private**).  
+- O **encapsulamento** protege informações usando **getters** e **setters**.  
 
 **Benefícios (Paved Roads):**  
-- **Desenvolvimento em paralelo**: equipes diferentes podem implementar classes sem conhecer todos os detalhes. Um dos motivos da existencia da programação orientada a objetos é possibilitar que a gente crie caixa com conhecimento e elas guardam duas coisas importantes, estado e comportamento, ou seja, a caixa é uma classe. toda vez que você guardda um estado ou comportamento dentro de uma classe você está faznedo o ocultamento dessas informações.
-
-Isto possibilita a gente quebrar o sistema e organizar ela em diferentes camadas, minimizando o impacto numa para outra.
-- **Flexibilidade a mudanças**: fácil substituir uma classe problemática sem afetar o resto do sistema.
-
-- **Facilidade de entendimento**: novos devs podem se concentrar apenas nas classes relevantes.  Ao quebrarmos o codigo em diversos pedaços pequenos e cada um tem sua responsabilidade, deixamos o codigo mais compreensivel, claro que isso exige que tenhamos uma visão macro da arquitetura do sistema, e façamos uma analise top down.
+- **Desenvolvimento em paralelo**: classes independentes permitem trabalho em equipe.  
+- **Flexibilidade a mudanças**: facilita substituir uma classe problemática sem afetar o sistema.  
+- **Facilidade de entendimento**: dividir o código em partes menores torna-o mais compreensível.  
 
 ---
 
-### AULA 04/08
+### Aula 04/08
 
-COESÃO. ACOMPLAMENTO E SOLID
+#### Coesão
+A coesão é a característica que garante que cada classe implemente uma única funcionalidade.  
+- Cada método deve fazer apenas **uma coisa bem feita**.  
+- Evitar tanto o excesso de fragmentação quanto a mistura de responsabilidades.  
 
-coesão e uma caracteristicas que buscamos enquanto estamaos programando. A implementação de qualquer classe deve ser coesa, isto é, toda classe deve implementar uma única funcionalidade ou serviço bem. Especificamente, todos os métodos e atributos de uma classe devem estar voltados para a implementação do mesmo serviço.
+**Vantagens da coesão:**  
+- Facilita implementação, entendimento e manutenção.  
+- Define claramente a responsabilidade de cada classe.  
+- Facilita reúso e testes.  
 
-deve se manter um bom senso ao usar a coesão para nao deixar o codigo extremameto fragmentado criando metodos para todas as coisas ou todo misturado, deixando de criar metodos.
+---
 
-o metodo deve sempre fazer UMA coisa bem feita.
+#### Acoplamento
+O acoplamento mede a dependência entre classes. O ideal é ter **baixo acoplamento**.  
 
-Coesão tem as seguintes vantagens:
+**Exemplo:**  
+- Um dispositivo USB funciona em qualquer computador, pois tem baixo acoplamento.  
+- Em software, interfaces cumprem esse papel (contrato).  
 
-Facilita a implementação de uma classe, bem como o seu entendimento e manutenção.
+**Acoplamento aceitável:**  
+- Classe A usa apenas métodos públicos da classe B.  
+- A interface de B é estável (assinaturas e comportamento não mudam com frequência).  
 
-Facilita a alocação de um único responsável por manter uma classe.
+**Acoplamento ruim:**  
+- Classe A acessa diretamente arquivos/banco de B.  
+- Classes compartilham variáveis globais.  
+- Interface de B muda com frequência.  
 
-Facilita o reúso e teste de uma classe, pois é mais simples reusar e testar uma classe coesa do que uma classe com várias responsabilidades.
+**Resumo:** maximize a coesão das classes e minimize o acoplamento entre elas.
 
-coesão é uma caracteristica que se deve buscar enquanto estamos programando, cada classe deve ter uma unica responsabilidade.
-facilita a implementação de uma classe, assim como seu entendimento e manutenção
-facilita a alocação de um responsavel para cada classe
-facilita o reuse e teste de uma classe
+---
 
-acoplamento
+### Aula 07/08
 
-exemplo USB, podemos arrancar um mouse...
+#### SOLID
+Programar seguindo os 5 princípios do SOLID é a forma mais eficaz de aplicar OO.  
 
-aula 07/08
+1. **Single Responsibility Principle (SRP):** cada classe deve ter apenas uma responsabilidade.  
+   - *Entity*: dados.  
+   - *Repository*: banco de dados (ex.: Spring Data JPA).  
+   - *Service*: lógica de negócio (use cases).  
+   - *Controller*: comunicação com a interface.  
 
-é programar orientado a objeto da melhor forma possivel, 
+2. **Open/Closed Principle (OCP):** classes devem estar fechadas para modificação e abertas para extensão.  
+   - Ex.: classes abstratas permitem extensão sem alterar código original.  
 
-single responsability, este principio é uma aplicacao direta da ideia de coesao. Cada classe deve ter apenas um motivo para ser modificado. Deve também separar apresentação de regras de negócio.
+3. **Liskov Substitution Principle (LSP):** subclasses devem poder substituir suas superclasses sem quebrar o sistema.  
 
-toda comunicaçao do nosso sistema deveria ter uma interface e toda interface deveria ter uma unica responsabilidade
+4. **Interface Segregation Principle (ISP):** interfaces devem ser pequenas, específicas e coesas.  
 
+5. **Dependency Inversion Principle (DIP):** classes devem depender de abstrações (interfaces) e não de implementações concretas.  
+   - Ex.: em Spring, `Controller` depende de `Service` (interface), implementada por `ServiceImpl`.  
 
-anotação importante:
+---
 
-assossiação - reta fechada
+### Aula 11/08
 
-heranca - reta aberta
+#### Prefira Composição a Herança
+- **Herança de classes:** `class A extends B`, envolve reúso de código.  
+- **Herança de interfaces:** `interface I extends J`, não envolve reúso de código.  
+- Herança forte pode violar encapsulamento e gerar alto acoplamento.  
+- Use herança quando subclasses **não podem ser substituídas** entre si.  
+- A composição é mais flexível e fácil de manter.  
 
-interface - pontilhada aberta
+#### Princípio de Demeter (Menor Conhecimento)
+Um método deve chamar apenas:  
+1. Métodos de sua própria classe.  
+2. Métodos de objetos recebidos como parâmetro.  
+3. Métodos de objetos criados dentro dele.  
+4. Métodos de atributos da classe.  
+
+Isso reduz acoplamento e aumenta a manutenibilidade.  
+
+#### Princípio Aberto/Fechado (OCP)
+- Classes devem estar **fechadas para modificação** e **abertas para extensão**.  
+- Reduz riscos de alterações gerarem novos erros.  
+- Classes abstratas são exemplos de aplicação desse princípio.  
+
+---
 
 ## Anotações Pessoais
 - Reforçar estudo em:
-  - Livro *Clean Code*
   - Grafos
-  - (Talvez SAP ABAP)
-  - O que é polimorfismo?
+  - SAP ABAP (talvez)
+  - Polimorfismo: capacidade de um objeto assumir múltiplas formas e ser tratado como instância da classe pai ou interface.  
+  - `@Autowired`: mecanismo do Spring para injeção automática de dependências.  
+  - SOLID  
+  - Livros de Robert C. Martin  
+  - Design Patterns  
+
+**Notas importantes:**  
+- Herança (`extends`) = seta vazada sem pontilhado.  
+- Associação = seta cheia sem pontilhado.  
+- Implementação (`interface`) = seta vazada pontilhada.  
 
 ---
 
 ## Referências e Leituras
-- [Livro Eng Soft Moderna - Capítulo 5](https://engsoftmoderna.info/cap5.html)
-- Livro importante: *Código Limpo (Clean Code)*
-
-
-
-
+- [Livro Eng Soft Moderna - Capítulo 5](https://engsoftmoderna.info/cap5.html)  
+- *Código Limpo (Clean Code)* – Robert C. Martin  
+- *O Codificador Limpo* – Robert C. Martin  
+- *Arquitetura Limpa* – Robert C. Martin  
+- *Design Patterns* – Erich Gamma (leitura avançada)  
+- Site: **Design Patterns**  
+- *Aprenda Domain-driven Design: Alinhando Arquitetura de Software e Estratégia de Negócios*  
