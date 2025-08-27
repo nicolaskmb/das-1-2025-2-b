@@ -1,4 +1,4 @@
-package br.univille.Singleton;
+package br.univille.singleton;
 
 public class Singleton {
     //parece como um variavel global(Static)
@@ -10,7 +10,7 @@ public class Singleton {
 
     public static Singleton getInstance(){
         if (instance == null){
-            instance = new Singleton
+            instance = new Singleton();
         }
         return instance;
     }

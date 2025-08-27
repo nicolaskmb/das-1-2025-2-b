@@ -135,6 +135,41 @@ Isso reduz acoplamento e aumenta a manutenibilidade.
 
 ---
 
+### Aula 14/08
+
+## Princípio de Substituição de Liskov (LSP)
+
+O Princípio de Substituição de Liskov afirma que:
+
+> Se uma classe **filha** herda de uma **classe pai**, ela deve manter a mesma assinatura dos métodos herdados, garantindo que qualquer instância da classe pai possa ser substituída por uma instância da filha **sem quebrar o código**.
+
+Ou seja:  
+Podemos trocar um objeto filho por outro da mesma hierarquia, e o programa continuará funcionando corretamente.
+
+---
+
+### Herança e uso prático
+A herança ainda é válida em alguns cenários.  
+Ela define uma relação **"é-um"** entre objetos de uma classe base e objetos de subclasses.  
+
+Vantagens:  
+- Métodos comuns podem ser implementados uma única vez na classe base.  
+- Esses métodos são herdados por todas as subclasses.  
+
+O LSP reforça regras para **redefinição de métodos** da classe base em subclasses.
+
+---
+
+### Exemplo
+Ao trabalhar com **JFrame** e trocar uma **linha de borda** por uma **borda de título**, ambas (`LineBorder` e `TitledBorder`) herdam de `AbstractBorder`.  
+Isso permite que sejam substituídas entre si **sem erro**, mantendo a compatibilidade entre os filhos.
+
+---
+
+### Aula 18/08
+
+
+
 ## Anotações Pessoais
 - Reforçar estudo em:
   - Grafos
@@ -144,6 +179,11 @@ Isso reduz acoplamento e aumenta a manutenibilidade.
   - SOLID  
   - Livros de Robert C. Martin  
   - Design Patterns  
+  - **Classes Abstratas**: uma classe abstrata é como uma mistura de classe com interface.  
+  - Uma **classe** é algo completo.  
+  - Uma **interface** é algo totalmente vazio (apenas contrato).  
+  - Já a **classe abstrata** é parcialmente pronta e parcialmente incompleta: alguns métodos já implementados, outros não.  
+  - Precisamos **implementar** os métodos abstratos ao usá-la.
 
 **Notas importantes:**  
 - Herança (`extends`) = seta vazada sem pontilhado.  
