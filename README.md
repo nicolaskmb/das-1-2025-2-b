@@ -170,10 +170,10 @@ Isso permite que sejam substituídas entre si **sem erro**, mantendo a compatibi
 
 ### Aula 04/09
 
-## Resuma a diferençca entre: Arquitetura e Design
+#### Resuma a diferençca entre: Arquitetura e Design
 O arquiteto diferentemente do design, tem como responsabilidade analisar os requisitos comerciais para extrair e definir as características da arquitetura (os “atributos”), selecionar quais padrões e estilos da arquitetura se encaixariam no domínio do problema e criar componentes (blocos de construção do sistema). Já o desenvolvedor tem como objetivo criar diagramas de classes para cada componente, criar telas de interface do usuário e desenvolver e testar o código-fonte.
 
-## Como é a formação do conhecimento de um arquiteto modelo T?
+#### Como é a formação do conhecimento de um arquiteto modelo T?
 Diferentemente de um desenvolvedor especialista em alguma tecnologia o arquiteto deve ter a formação do seu conhecimento técnico mais amplo sobre as tecnologias e qual é a melhor solução e práticas para certo cenário do que realmente entender profundamente o que um certa tecnologia ou abordagem faz.
 
 
