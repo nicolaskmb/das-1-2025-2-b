@@ -1,15 +1,13 @@
 # DAS-1-2025-2-B
 
-## Aulas
+## Aula 31/07
 
-### Aula 31/07
-
-#### Software
+### Software
 O software surgiu para resolver problemas, abstraindo elementos complexos em código para tratar situações reais.
 
 ---
 
-#### Abstração
+### Abstração
 - **Entidade**: abstrai os dados das entidades.
 - **Repositório**: abstrai o banco de dados.
 - **Service**: abstrai as regras de negócio.
@@ -19,7 +17,7 @@ O software surgiu para resolver problemas, abstraindo elementos complexos em có
 
 ---
 
-#### Complexidade
+### Complexidade
 **Por que a complexidade é ruim?**
 - Aumenta as chances de erro.
 - Dificulta implementação, manutenção e detecção de falhas.
@@ -32,7 +30,7 @@ Manter tudo em um único lugar é uma prática antiga e obsoleta.
 
 ---
 
-#### Más Práticas
+### Más Práticas
 - Uso inconsistente de padrões de nomenclatura (camelCase vs snake_case).
 - Uso de frameworks diferentes ou de versões distintas em partes do sistema.
 - Resolver problemas semelhantes com estruturas de dados diferentes sem justificativa.
@@ -42,7 +40,7 @@ Manter tudo em um único lugar é uma prática antiga e obsoleta.
 
 ---
 
-#### Ocultamento
+### Ocultamento
 - Em OOP, a complexidade é escondida por meio de **APIs** e modificadores de acesso (**private**).
 - O **encapsulamento** protege informações usando **getters** e **setters**.
 
@@ -53,9 +51,9 @@ Manter tudo em um único lugar é uma prática antiga e obsoleta.
 
 ---
 
-### Aula 04/08
+## Aula 04/08
 
-#### Coesão
+### Coesão
 A coesão é a característica que garante que cada classe implemente uma única funcionalidade.
 - Cada método deve fazer apenas **uma coisa bem feita**.
 - Evitar tanto o excesso de fragmentação quanto a mistura de responsabilidades.
@@ -67,7 +65,7 @@ A coesão é a característica que garante que cada classe implemente uma única
 
 ---
 
-#### Acoplamento
+### Acoplamento
 O acoplamento mede a dependência entre classes. O ideal é ter **baixo acoplamento**.
 
 **Exemplo:**
@@ -87,9 +85,9 @@ O acoplamento mede a dependência entre classes. O ideal é ter **baixo acoplame
 
 ---
 
-### Aula 07/08
+## Aula 07/08
 
-#### SOLID
+### SOLID
 Programar seguindo os 5 princípios do SOLID é a forma mais eficaz de aplicar OO.
 
 1. **Single Responsibility Principle (SRP):** cada classe deve ter apenas uma responsabilidade.
@@ -110,9 +108,9 @@ Programar seguindo os 5 princípios do SOLID é a forma mais eficaz de aplicar O
 
 ---
 
-### Aula 11/08
+## Aula 11/08
 
-#### Prefira Composição a Herança
+### Prefira Composição a Herança
 - **Herança de classes:** `class A extends B`, envolve reúso de código.
 - **Herança de interfaces:** `interface I extends J`, não envolve reúso de código.
 - Herança forte pode violar encapsulamento e gerar alto acoplamento.
@@ -121,7 +119,7 @@ Programar seguindo os 5 princípios do SOLID é a forma mais eficaz de aplicar O
 
 ---
 
-#### Princípio de Demeter (Menor Conhecimento)
+### Princípio de Demeter (Menor Conhecimento)
 Um método deve chamar apenas:
 1. Métodos de sua própria classe.
 2. Métodos de objetos recebidos como parâmetro.
@@ -130,16 +128,16 @@ Um método deve chamar apenas:
 
 Isso reduz acoplamento e aumenta a manutenibilidade.
 
-#### Princípio Aberto/Fechado (OCP)
+### Princípio Aberto/Fechado (OCP)
 - Classes devem estar **fechadas para modificação** e **abertas para extensão**.
 - Reduz riscos de alterações gerarem novos erros.
 - Classes abstratas são exemplos de aplicação desse princípio.
 
 ---
 
-### Aula 14/08
+## Aula 14/08
 
-#### Princípio de Substituição de Liskov (LSP)
+### Princípio de Substituição de Liskov (LSP)
 
 O Princípio de Substituição de Liskov afirma que:
 
@@ -150,7 +148,7 @@ Podemos trocar um objeto filho por outro da mesma hierarquia, e o programa conti
 
 ---
 
-#### Herança e uso prático
+### Herança e uso prático
 A herança ainda é válida em alguns cenários.
 Ela define uma relação **"é-um"** entre objetos de uma classe base e objetos de subclasses.
 
@@ -162,15 +160,15 @@ O LSP reforça regras para **redefinição de métodos** da classe base em subcl
 
 ---
 
-#### Exemplo
+### Exemplo
 Ao trabalhar com **JFrame** e trocar uma **linha de borda** por uma **borda de título**, ambas (`LineBorder` e `TitledBorder`) herdam de `AbstractBorder`.
 Isso permite que sejam substituídas entre si **sem erro**, mantendo a compatibilidade entre os filhos.
 
 ---
 
-### Aula 18/08
+## Aula 18/08
 
-#### Singleton
+### Singleton
 O **Singleton** é um padrão que garante que uma classe tenha **apenas uma única instância** durante toda a execução do programa e fornece um **método de acesso global** a essa instância.
 
 Singleton hoje em dia é considerado um anti-pattern, pois:
@@ -180,9 +178,9 @@ Singleton hoje em dia é considerado um anti-pattern, pois:
 
 ---
 
-### Aula 21/08
+## Aula 21/08
 
-#### Observer
+### Observer
 
 O **Observer** (ou *Observador*) é um padrão que define uma relação **um-para-muitos** entre objetos.
 Quando um objeto (chamado de **sujeito** ou *subject*) muda de estado, todos os seus **observadores** são automaticamente notificados e atualizados.
@@ -191,7 +189,7 @@ Em outras palavras, o Observer permite que múltiplos objetos “fiquem sabendo�
 
 ---
 
-#### Estrutura Básica
+### Estrutura Básica
 - **Subject (Sujeito)**: é o objeto observado. Ele mantém uma lista de observadores e fornece métodos para adicioná-los ou removê-los.
 - **Observer (Observador)**: é a interface que define o método `update()`, chamado sempre que o sujeito muda de estado.
 - **ConcreteSubject**: implementação concreta do sujeito; armazena o estado e notifica os observadores quando ocorre uma mudança.
@@ -199,15 +197,15 @@ Em outras palavras, o Observer permite que múltiplos objetos “fiquem sabendo�
 
 ---
 
-### Aula 21/08
+## Aula 21/08
 
 *continuação do observer...*
 
 ---
 
-### Aula 25/08
+## Aula 25/08
 
-#### Características Arquiteturais
+### Características Arquiteturais
 Representam as **propriedades não funcionais** de um sistema — ou seja, *como* o sistema faz o que faz.
 
 Exemplos comuns:
@@ -222,8 +220,8 @@ Essas características influenciam fortemente o design, as tecnologias e os trad
 
 ---
 
-#### Decisões Arquiteturais
-São as **escolhas técnicas concretas** tomadas durante o projeto de um sistema.
+### Decisões Arquiteturais
+São as **escolhas técnicas** tomadas durante o projeto de um sistema.
 
 Exemplos:
 - Escolher entre **monólito** ou **microserviços**.
@@ -232,7 +230,7 @@ Exemplos:
 
 ---
 
-#### Princípios Arquiteturais
+### Princípios Arquiteturais
 São as **regras** que influenciam as decisões do arquiteto de software.
 
 Exemplos de princípios:
@@ -244,18 +242,115 @@ Exemplos de princípios:
 
 ---
 
-#### Relação entre eles
+### Relação entre eles
 - **Características** definem *o que* o sistema precisa garantir.
 - **Decisões** definem *como implementar*.
 - **Princípios** definem *como pensar* e *quais diretrizes seguir*.
 
-### Aula 04/09
+---
 
-#### Resuma a diferençca entre: Arquitetura e Design
-O arquiteto diferentemente do design, tem como responsabilidade analisar os requisitos comerciais para extrair e definir as características da arquitetura (os “atributos”), selecionar quais padrões e estilos da arquitetura se encaixariam no domínio do problema e criar componentes (blocos de construção do sistema). Já o desenvolvedor tem como objetivo criar diagramas de classes para cada componente, criar telas de interface do usuário e desenvolver e testar o código-fonte.
+## Aula 01/09
 
-#### Como é a formação do conhecimento de um arquiteto modelo T?
-Diferentemente de um desenvolvedor especialista em alguma tecnologia o arquiteto deve ter a formação do seu conhecimento técnico mais amplo sobre as tecnologias e qual é a melhor solução e práticas para certo cenário do que realmente entender profundamente o que um certa tecnologia ou abordagem faz.
+### Espectativas de um Arquiteto
+Definir o papel de um arquiteto de software é difícil, o mais importante é compreender as principais expectativas associadas à função.
+
+- **Tomar** decisões de arquitetura
+- **Analisar** continuamente a arquitetura
+- **Manter-se** atualizado com as últimas tendências
+- **Assegurar** a conformidade com as decisões
+- **Exposição e experiência** diversificadas
+- **Ter conhecimento** sobre o domínio do negócio
+- **Ter habilidades** interpessoais
+- **Entender e lidar** bem com questões políticas
+
+---
+
+### Tomar Decisões de Arquitetura
+
+O arquiteto deve **definir decisões arquiteturais e princípios de design** que **orientem** as escolhas tecnológicas da equipe e **não impô-las**.
+A função principal é guiar o time na seleção de tecnologias alinhadas à visão da arquitetura escolhida.
+
+---
+
+### Analisar Continuamente a Arquitetura
+
+O arquiteto deve **avaliar continuamente a arquitetura e o ambiente tecnológico atual** para identificar melhorias e garantir que o sistema continue adequado às mudanças do negócio e da tecnologia.
+
+Essa prática assegura a **vitalidade da arquitetura**, evitando a **decadência estrutural**, que ocorre quando alterações no código comprometem características como desempenho, disponibilidade e escalabilidade.
+
+Além do design, é essencial observar **processos de teste e implantação**: não adianta ter código ágil se o sistema demora semanas para ser testado e lançado.
+
+Em resumo, o arquiteto precisa **monitorar e ajustar continuamente** a arquitetura e seus processos, mantendo o sistema **robusto, moderno e relevante** ao longo do tempo.
+
+---
+
+### Manter-se Atualizado com as Últimas Tendências
+
+O arquiteto deve ficar **atualizado continuamente as novas tecnologias e tendências do setor**, pois suas **decisões** têm impacto de **longo prazo e são difíceis de mudar**. O arquiteto precisa **entender as mudanças no cenário tecnológico**, antecipando-se a elas para **tomar decisões mais duradouras e seguras**.
+
+---
+
+### Assegurar Conformidade com as Decisões
+
+Um arquiteto deve garantir que as **decisões e padrões definidos na arquitetura** estejam sendo seguidos pela equipe durante o desenvolvimento.
+Manter a conformidade evita desvios técnicos e assegura a **consistência do sistema**.
+
+Uma prática comum para isso é o uso de **análise estática de código**, que identifica automaticamente **antipadrões e violações de estilo** em commits ou pull requests, ajudando a manter a qualidade e o alinhamento arquitetural do projeto.
+
+---
+
+### Ter Conhecimento sobre o Domínio do Negócio
+
+Um arquiteto deve **entender o domínio do negócio**, não apenas os aspectos técnicos.
+Sem esse conhecimento, torna-se difícil compreender os problemas, metas e requisitos da empresa, o que prejudica o **planejamento de uma arquitetura eficaz**.
+
+O entendimento do domínio permite **comunicação clara com stakeholders, POs e usuários**, aumentando a credibilidade e a confiança na atuação do arquiteto.
+
+Os profissionais mais eficientes combinam **amplo conhecimento técnico** com **entendimento profundo do negócio**, tornando-se ponte entre a área técnica e a estratégica.
+
+---
+
+### DevOps
+
+DevOps é uma combinação das palavras **"Desenvolvimento" (Development) e "Operações" (Operations)**. É uma prática **cultural e profissional** que busca a substituição de operações e desenvolvimento em silos. A ideia é criar equipes multidisciplinares que agora trabalham em conjunto com práticas e ferramentas compartilhadas e eficientes, **entregando valor ao cliente o mais rápido possível**. As práticas de DevOps essenciais incluem **planejamento ágil, integração contínua, entrega contínua e monitoramento de aplicativos**.
+
+---
+
+## Aula 04/09
+
+### Resuma a diferençca entre: Arquitetura e Design
+O arquiteto diferentemente do design, tem como responsabilidade **analisar os requisitos comerciais para extrair e definir as características da arquitetura (os “atributos”)**, **selecionar quais padrões e estilos da arquitetura se encaixariam no domínio do problema e criar componentes (blocos de construção do sistema)**. Já o desenvolvedor tem como objetivo **criar diagramas de classes para cada componente, criar telas de interface do usuário e desenvolver e testar o código-fonte.**
+
+### Como é a formação do conhecimento de um arquiteto modelo T?
+O **modelo T** descreve um arquiteto que combina profundidade **técnica e amplitude de conhecimento**. A **barra vertical** representa o **domínio profundo** em uma área específica, como backend, segurança ou bancos de dados, enquanto a **barra horizontal** indica um conhecimento **amplo em diversas disciplinas**, como DevOps, UX, negócios e metodologias ágeis. Assim, o arquiteto modelo T é um profissional que une especialização em um campo com visão global do sistema, sendo capaz de tomar decisões equilibradas e integrar diferentes áreas de forma eficiente.
+
+---
+
+## Aula 08/09
+
+### Trade-Offs
+
+Trade-offs em arquitetura de software representam as **escolhas necessárias entre vantagens e desvantagens** de diferentes soluções técnicas. Não existe uma resposta universalmente correta, já que toda decisão arquitetural **depende** do contexto, como ambiente, recursos, prazos e objetivos do sistema.
+
+---
+
+### Fila e Tópicos
+
+- Fila (Queue): cada mensagem é enviada para um único ponto, usada em comunicação 1 para 1.
+
+- Tópico (Topic): uma mensagem é enviada para vários pontos assinantes, usada em comunicação 1 para n. Ideal para desacoplamento e extensibilidade.
+
+---
+
+## Aula 11/09, 15/09 e 18/09
+
+- Implementação do publisher e subscriber (tópico)
+
+---
+
+## Aula 02/10
+
+- Implementação do publisher e subscriber (fila)
 
 ---
 
@@ -272,8 +367,11 @@ Diferentemente de um desenvolvedor especialista em alguma tecnologia o arquiteto
   - Uma **interface** é algo totalmente vazio (apenas contrato) ;
   - Já a **classe abstrata** é parcialmente pronta e parcialmente incompleta: alguns métodos já implementados, outros não ;
   - Precisamos **implementar** os métodos abstratos ao usá-la ;
-  - Um atributo estático **static** é carregado antes da classe na memória. Isso significa que a variável marcada como static existe independentemente de instâncias, sendo acessível de forma global.
-  - O termo **supply chain** se refere a todo o conjunto de componentes, bibliotecas, ferramentas, serviços e processos usados para desenvolver, construir, testar, distribuir e manter um software. É importante controlar e monitorar o supply chain, pois muitos sistemas dependem de ferramentas e bibliotecas públicas, que podem conter vulnerabilidades ou até malwares inseridos por terceiros, comprometendo a segurança e a integridade do sistema.
+  - Um atributo estático **static** é carregado antes da classe na memória. Isso significa que a variável marcada como static existe independentemente de instâncias, sendo acessível de forma global ;
+  - O termo **supply chain** se refere a todo o conjunto de componentes, bibliotecas, ferramentas, serviços e processos usados para desenvolver, construir, testar, distribuir e manter um software. É importante controlar e monitorar o supply chain, pois muitos sistemas dependem de ferramentas e bibliotecas públicas, que podem conter vulnerabilidades ou até malwares inseridos por terceiros, comprometendo a segurança e a integridade do sistema ;
+  - **Ciclo PDCA**, ciclo de melhoria contínua ;
+  - **Polling** é o processo de consultar e buscar mensagens repetidamente ;
+  - **Buffer** é um lugar onde armazena dados temporariamente até serem requisitados.
 
 **Notas importantes:**  
 - Herança (`extends`) = seta vazada sem pontilhado ;
