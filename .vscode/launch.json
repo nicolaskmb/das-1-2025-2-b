@@ -2,6 +2,37 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Cliente",
+            "request": "launch",
+            "mainClass": "br.univille.singleton.Cliente",
+            "projectName": "designpatterns"
+        },
+        {
+            "type": "java",
+            "name": "Consumer",
+            "request": "launch",
+            "mainClass": "br.univille.Consumer",
+            "projectName": "eventos",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Producer",
+            "request": "launch",
+            "mainClass": "br.univille.Producer",
+            "projectName": "eventos",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Subscriber",
+            "request": "launch",
+            "mainClass": "br.univille.Subscriber",
+            "projectName": "eventos",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
             "name": "Publisher",
             "request": "launch",
             "mainClass": "br.univille.Publisher",
