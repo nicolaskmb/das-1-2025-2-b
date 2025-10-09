@@ -521,3 +521,4 @@ Em resumo, o Circuit Breaker ajuda a **proteger aplicações distribuídas** con
 - Site: [**Deisgn Patterns**](https://refactoring.guru/design-patterns/singleton)
 - *Aprenda Domain-driven Design: Alinhando Arquitetura de Software e Estratégia de Negócios*
 - [Introdução a DevOps - Microsoft](https://learn.microsoft.com/pt-br/training/modules/introduction-to-devops/2-what-is-devops?ns-enrollment-type=learningpath&ns-enrollment-id=learn.wwl.az-400-work-git-for-enterprise-devops)
+- [Circuit Breaker pattern - Microsoft](https://learn.microsoft.com/en-us/azure/architecture/patterns/circuit-breaker)
