@@ -1,5 +1,7 @@
 # DAS-1-2025-2-B
 
+# 1° Bimestre
+
 ## Aula 31/07
 
 ### Software
@@ -351,6 +353,135 @@ Trade-offs em arquitetura de software representam as **escolhas necessárias ent
 ## Aula 02/10
 
 - Implementação do publisher e subscriber (fila)
+
+---
+
+# 2° Bimestre
+
+## Aula 06/10
+
+### Definição das Características Arquiteturais
+
+Os arquitetos de software não se limitam a definir requisitos de negócio ou de domínio.  
+Uma de suas principais responsabilidades é **definir, descobrir e analisar as características que o software deve possuir além da funcionalidade**, ou seja, **as características da arquitetura**.
+
+Essas características representam **aspectos críticos do sistema independentes do domínio do problema**, sendo também conhecidas como **atributos de qualidade**.  
+Contudo, o termo *características da arquitetura* é mais adequado, pois descreve preocupações essenciais para o **sucesso e a sustentabilidade da solução**, e não apenas “qualidades” secundárias.
+
+Uma **característica da arquitetura** deve atender a três critérios:
+
+1. **Especifica uma consideração de design fora do domínio** — define critérios operacionais e estruturais que não estão diretamente ligados à funcionalidade, como desempenho, segurança e confiabilidade.  
+2. **Influencia algum aspecto estrutural do design** — impacta diretamente o desenho da solução, podendo exigir decisões arquiteturais específicas (por exemplo, criar módulos separados para segurança ou alta disponibilidade).  
+3. **É essencial ou importante para o sucesso da aplicação** — cada característica adiciona complexidade, então o arquiteto deve **priorizar as mais relevantes** ao contexto do sistema, evitando sobrecarga de requisitos.
+
+As características podem ser:
+- **Explícitas:** aparecem nos documentos de requisitos e são solicitadas pelos stakeholders.  
+- **Implícitas:** não são formalmente exigidas, mas são **críticas para o sucesso**, como disponibilidade, segurança ou escalabilidade.
+
+---
+
+### Categorias de Características Arquiteturais
+
+#### 1. Características Operacionais
+
+Relacionam-se ao **comportamento do sistema em execução** e à sua capacidade de se manter estável, escalável e disponível.
+
+| Termo | Definição |
+|-------|------------|
+| **Disponibilidade** | Tempo que o sistema precisa permanecer acessível (ex: 24/7). |
+| **Continuidade** | Capacidade de recuperação em caso de desastre. |
+| **Desempenho** | Tempo de resposta, carga máxima e eficiência sob estresse. |
+| **Recuperabilidade** | Capacidade de se restaurar rapidamente após falhas. |
+| **Confiabilidade / Segurança** | Garantia de que o sistema não falhará em situações críticas. |
+| **Robustez** | Capacidade de lidar com erros e exceções sem falhar. |
+| **Escalabilidade** | Capacidade de crescer conforme aumenta o número de usuários ou transações. |
+
+---
+
+#### 2. Características Estruturais
+
+Referem-se à **organização interna do sistema**, qualidade do código e facilidade de manutenção e evolução.
+
+| Termo | Definição |
+|-------|------------|
+| **Configuração** | Facilidade com que usuários ou administradores ajustam o sistema. |
+| **Extensibilidade** | Capacidade de adicionar novas funcionalidades sem grandes reestruturações. |
+| **Instalabilidade** | Facilidade de instalação e atualização em diferentes ambientes. |
+| **Reutilização** | Uso de componentes comuns em vários contextos. |
+| **Manutenibilidade** | Facilidade de correção e evolução do sistema. |
+| **Portabilidade** | Capacidade de operar em diferentes plataformas e ambientes. |
+| **Suporte / Atualização** | Facilidade de oferecer suporte técnico e atualizar versões. |
+
+---
+
+#### 3. Características Transversais
+
+Afetam várias camadas do sistema e influenciam desde o design até a experiência do usuário.
+
+| Termo | Definição |
+|-------|------------|
+| **Acessibilidade** | Garantia de acesso a todos os usuários, inclusive com deficiências. |
+| **Armazenamento** | Políticas de retenção, exclusão e arquivamento de dados. |
+| **Autenticação e Autorização** | Controle de identidade e permissões de acesso. |
+| **Legalidade** | Conformidade com normas e legislações (ex: LGPD, GDPR). |
+| **Privacidade** | Proteção de dados sensíveis contra acesso indevido. |
+| **Segurança** | Criptografia, autenticação e integridade de dados. |
+| **Usabilidade / Viabilidade** | Facilidade de uso e curva de aprendizado dos usuários. |
+| **Suporte Técnico** | Mecanismos de logging, monitoramento e resolução de erros. |
+
+---
+
+### Características Segundo a ISO
+
+A **ISO** define um conjunto padronizado de características de qualidade do software:
+
+- **Eficiência de desempenho**
+- **Compatibilidade**
+- **Usabilidade**
+- **Confiabilidade**
+- **Segurança**
+- **Manutenibilidade**
+- **Portabilidade**
+
+### Aspectos Funcionais ISO
+- **Adequação funcional**
+- **Totalidade funcional**
+- **Correção funcional**
+
+Esses últimos tratam de **funcionalidade**, não diretamente da arquitetura, mas são essenciais para contextualizar o propósito do sistema.
+
+---
+
+## Trade-offs e a “Arquitetura Menos Pior”
+
+Em arquitetura de software, **não é possível otimizar todas as características ao mesmo tempo**.  
+Melhorar uma quase sempre **impacta negativamente outra** — esses compromissos são chamados de **trade-offs**.
+
+Por exemplo:
+- Aumentar a **segurança** pode reduzir o **desempenho**.  
+- Melhorar a **escalabilidade** pode aumentar a **complexidade** e o **custo**.  
+
+O papel do arquiteto é **avaliar o contexto e equilibrar as decisões**, priorizando o que mais agrega valor ao negócio e à sustentabilidade técnica.
+
+> **“Nunca mire na melhor arquitetura, mas na arquitetura menos pior.”**
+
+---
+
+## Aula 09/10
+
+### Padrão Circuit Breaker
+
+O **padrão Circuit Breaker** funciona de forma semelhante a um **disjuntor elétrico** em uma casa. Assim como o disjuntor corta a energia quando detecta uma sobrecarga para evitar danos maiores, o Circuit Breaker interrompe temporariamente as chamadas a um serviço quando detecta falhas repetidas, evitando que o sistema inteiro seja sobrecarregado.
+
+Quando o padrão identifica uma sequência de falhas em um serviço, ele **“abre o circuito”** — ou seja, **bloqueia novas requisições** por um tempo pré-definido. Esse estado é chamado de **Open**. Durante esse período, as chamadas são imediatamente rejeitadas ou redirecionadas, permitindo que o serviço com falha se recupere.
+
+Após o tempo configurado, o Circuit Breaker entra no estado **Half-Open**, no qual **permite um número limitado de requisições de teste** para verificar se o serviço voltou ao normal.  
+- Se as chamadas de teste **falharem novamente**, o circuito retorna ao estado **Open**.  
+- Se as chamadas **forem bem-sucedidas**, o circuito muda para o estado **Closed**.
+
+No estado **Closed**, o sistema opera normalmente, **monitorando continuamente** as requisições. Se novas falhas começarem a ocorrer em sequência, o ciclo se repete — voltando ao estado **Open**.
+
+Em resumo, o Circuit Breaker ajuda a **proteger aplicações distribuídas** contra falhas em cascata e **melhora a resiliência** do sistema, evitando que falhas temporárias em um serviço se propaguem para os demais.
 
 ---
 
