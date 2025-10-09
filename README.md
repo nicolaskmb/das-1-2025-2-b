@@ -473,13 +473,13 @@ O papel do arquiteto é **avaliar o contexto e equilibrar as decisões**, priori
 
 O **padrão Circuit Breaker** funciona de forma semelhante a um **disjuntor elétrico** em uma casa. Assim como o disjuntor corta a energia quando detecta uma sobrecarga para evitar danos maiores, o Circuit Breaker interrompe temporariamente as chamadas a um serviço quando detecta falhas repetidas, evitando que o sistema inteiro seja sobrecarregado.
 
-Quando o padrão identifica uma sequência de falhas em um serviço, ele **“abre o circuito”** — ou seja, **bloqueia novas requisições** por um tempo pré-definido. Esse estado é chamado de **Open**. Durante esse período, as chamadas são imediatamente rejeitadas ou redirecionadas, permitindo que o serviço com falha se recupere.
+Quando o padrão identifica uma sequência de falhas em um serviço, ele **“abre o circuito”**, ou seja, **bloqueia novas requisições** por um tempo pré-definido. Esse estado é chamado de **Open**. Durante esse período, as chamadas são imediatamente rejeitadas ou redirecionadas, permitindo que o serviço com falha se recupere.
 
 Após o tempo configurado, o Circuit Breaker entra no estado **Half-Open**, no qual **permite um número limitado de requisições de teste** para verificar se o serviço voltou ao normal.  
 - Se as chamadas de teste **falharem novamente**, o circuito retorna ao estado **Open**.  
 - Se as chamadas **forem bem-sucedidas**, o circuito muda para o estado **Closed**.
 
-No estado **Closed**, o sistema opera normalmente, **monitorando continuamente** as requisições. Se novas falhas começarem a ocorrer em sequência, o ciclo se repete — voltando ao estado **Open**.
+No estado **Closed**, o sistema opera normalmente, **monitorando continuamente** as requisições. Se novas falhas começarem a ocorrer em sequência, o ciclo se repete, voltando ao estado **Open**.
 
 Em resumo, o Circuit Breaker ajuda a **proteger aplicações distribuídas** contra falhas em cascata e **melhora a resiliência** do sistema, evitando que falhas temporárias em um serviço se propaguem para os demais.
 
