@@ -795,9 +795,84 @@ São módulos autônomos, independentes e **sem estado** (stateless).
 
 ## Aula 03/11 e 06/11
 
+### Estilo de Arquitetura Microkernel (Plug-in Architecture)
 
+Conhecida também como **arquitetura de plug-ins**, é um estilo clássico que permanece muito atual. É a escolha natural para **softwares baseados em produto** (ex: IDEs, navegadores) e aplicações que precisam ser instaladas e customizadas em diferentes clientes sem alterar o núcleo do sistema.
+
+----------
+
+### Topologia
+
+A arquitetura é dividida em duas partes principais que colaboram entre si:
+
+#### 1. Sistema Central (Core System)
+
+É a funcionalidade mínima necessária para o sistema rodar.
+
+-   **Definição:** Contém o "caminho feliz" e a lógica básica, sem customizações complexas.
+    
+-   **Responsabilidade:** Gerenciar o ciclo de vida dos plug-ins e orquestrar o fluxo de trabalho.
+    
+-   **Exemplo:** O núcleo do Eclipse é apenas um editor de texto que abre e salva arquivos. Tudo o que o torna uma IDE poderosa (compilação, debug, git) vem de plug-ins.
+    
+
+#### 2. Componentes de Plug-in
+
+São módulos autônomos e independentes que estendem ou aprimoram o sistema central.
+
+-   **Isolamento:** Encapsulam regras de negócio específicas, regras voláteis ou customizações por cliente (ex: regras fiscais de diferentes estados).
+    
+-   **Comunicação:** Geralmente "Ponto a Ponto" (chamada de função direta) ou via serviços remotos (REST/Mensageria), embora o acesso remoto adicione complexidade de sistema distribuído.
+    
+
+----------
+
+### Mecanismos de Funcionamento
+
+-   **Registro de Plug-ins:** O sistema central precisa saber quais plug-ins existem e como carregá-los. Isso é feito através de um registro (pode ser um simples arquivo config, um Map em memória ou ferramentas como ZooKeeper) contendo nome, contrato de dados e protocolo de acesso.
+    
+-   **Contratos:** Definem as interfaces padrão (entradas e saídas) que os plug-ins devem respeitar. Se um plug-in de terceiro não seguir o padrão, usa-se um **Adapter** para conectá-lo ao Core.
+    
+-   **Banco de Dados:** Geralmente, os plug-ins não acessam o banco diretamente para manter o desacoplamento. O Core passa os dados necessários. Porém, plug-ins podem ter seus próprios bancos de dados privados para regras internas.
+    
+
+----------
+
+### Benefícios da Arquitetura
+
+-   **Extensibilidade e Modularidade (Média/Alta):** Novas funcionalidades (ex: suporte a um novo imposto ou dispositivo) podem ser adicionadas criando um novo plug-in, sem tocar no código do Core.
+    
+-   **Simplicidade e Custo (Alta):** O Core pode ser mantido simples e estável, enquanto a complexidade é empurrada para os plug-ins isolados.
+    
+-   **Isolamento de Regras:** Ideal para regras de negócio complexas e variáveis (como seguros ou impostos), onde cada variação é um módulo separado, evitando a criação de uma "Grande Bola de Lama".
+    
+
+### Desafios e Limitações
+
+-   **Escalabilidade e Elasticidade (Baixa):** Geralmente implementada como monolito (Quantum = 1). Todos os plug-ins rodam no mesmo processo do Core, dificultando escalar apenas uma parte.
+    
+-   **Tolerância a Falhas (Baixa):** Se um plug-in mal escrito travar o processo principal, todo o sistema (Core + outros plug-ins) pode cair.
+    
+-   **Complexidade de Contratos:** Gerenciar versões de contratos e garantir que o Core suporte plug-ins legados pode ser difícil.
+    
+
+----------
+
+### Quando Usar
+
+-   Ferramentas de desenvolvimento (IDEs, ferramentas de build como Jenkins).
+    
+-   Aplicações com regras de negócio altamente variáveis por região ou cliente (Seguros, Sistemas Fiscais).
+    
+-   Produtos de software que precisam de customização no cliente final sem alterar o código-fonte base.
 
 ---
+
+## Aula 10/11 e 13/11
+
+### Estilo de Arquitetura Baseada em Serviços
+
+A arquitetura baseada em serviços é uma combinação do estilo microsserviços e é considerada um dos estilos mais pragmáticos, em grande parte devido à sua flexibilidade arquitetural.
 
 ## Anotações Pessoais e Tópicos Extras
   - Grafos ;
@@ -829,6 +904,11 @@ São módulos autônomos, independentes e **sem estado** (stateless).
   - **Comando com Pipe no Terminal Linux (`|`)**: é a implementação prática da arquitetura pipeline, conectando a saída (`stdout`) de um comando à entrada (`stdin`) do próximo. Exemplo: `ps ax | grep -i java | tail`. Onde `ps ax` lista os processos, `grep -i java` filtra a lista procurando por "java" e o `tail` exibe apenas as **últimas linhas** do resultado (útil para listas muito grandes);
   - **curl**: ferramenta de linha de comando (CLI) usada para transferir dados de ou para um servidor, suportando diversos protocolos (HTTP, HTTPS, FTP, etc.). É extremamente utilizada para testar APIs REST, permitindo enviar requisições (GET, POST, etc.) e visualizar o retorno diretamente no terminal;
   - **Apache Kafka**: plataforma distribuída de streaming de eventos. Funciona como um sistema de mensagens de alta performance (modelo _publish/subscribe_) projetado para lidar com grandes volumes de dados em tempo real. Seus principais componentes são: **Producer** (quem envia os dados), **Consumer** (quem lê os dados), **Topic** (categoria ou canal onde as mensagens são organizadas) e **Broker** (o servidor que armazena e gerencia essas mensagens). É amplamente utilizado para desacoplar sistemas e construir pipelines de dados robustos;
+  -   **HashMap**: estrutura de dados que armazena pares de **Chave-Valor** (Key-Value). Utiliza uma tabela de hash para permitir buscas extremamente rápidas. Não permite chaves duplicadas e não garante a ordem dos elementos;
+  - **ArrayList**: implementação de uma lista dinâmica baseada em um array redimensionável. Diferente de um array comum, ele cresce automaticamente. Mantém a ordem de inserção, permite elementos duplicados e o acesso é feito via índice numérico (0, 1, 2...);
+  - **Diferença entre HashMap e ArrayList**: O **ArrayList** guarda apenas valores em uma sequência ordenada (acessados por índice), ideal para percorrer listas. O **HashMap** guarda associações (dicionário) onde você precisa de uma chave única (como um ID ou CPF) para encontrar um valor rapidamente, sem se importar com a ordem;
+  - **Dapr (Distributed Application Runtime)**: é um runtime portátil e orientado a eventos que facilita a construção de aplicações distribuídas (microsserviços) resilientes. Ele funciona utilizando o padrão **Sidecar**, onde um processo auxiliar roda ao lado da sua aplicação e assume a responsabilidade de se comunicar com a infraestrutura (banco de dados, filas, etc.) ;
+  - **Como Dapr simplifica o desenvolvimento distribuído**: O Dapr abstrai a complexidade fornecendo **Building Blocks** (blocos de construção) prontos para tarefas comuns como: invocação de serviços, gerenciamento de estado, Pub/Sub e segredos. Isso significa que seu código fala apenas com o Dapr via HTTP/gRPC, e o Dapr fala com a infraestrutura (Redis, AWS, Azure, etc.). Isso permite trocar a tecnologia de infraestrutura sem precisar alterar nenhuma linha de código da aplicação ;
 
 ---
 
@@ -853,5 +933,4 @@ São módulos autônomos, independentes e **sem estado** (stateless).
 - [CQRS pattern - Microsoft](https://learn.microsoft.com/en-us/azure/architecture/patterns/cqrs)
 - [Retry pattern - Microsoft](https://learn.microsoft.com/en-us/azure/architecture/patterns/retry)
 - [Arquitetura de software: as partes difíceis](https://app.minhabiblioteca.com.br/reader/books/9788550819891/epubcfi/6/2[%3Bvnd.vst.idref%3Dcover]!/4/2/2%4071:54)
-
 - [Node-RED - Low-code programming for event-driven applications](https://nodered.org/)
