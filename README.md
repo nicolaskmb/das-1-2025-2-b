@@ -173,7 +173,7 @@ Isso permite que sejam substituídas entre si **sem erro**, mantendo a compatibi
 ### Singleton
 O **Singleton** é um padrão que garante que uma classe tenha **apenas uma única instância** durante toda a execução do programa e fornece um **método de acesso global** a essa instância.
 
-Singleton hoje em dia é considerado um anti-pattern, pois:
+Singleton hoje em dia é considerado um anti-padrão, pois:
 - Cria um ponto único de acesso global, semelhante a uma variável global;
 
 - Pode aumentar o acoplamento entre componentes.
@@ -387,7 +387,7 @@ As características podem ser:
 Relacionam-se ao **comportamento do sistema em execução** e à sua capacidade de se manter estável, escalável e disponível.
 
 | Termo | Definição |
-|-------|------------|
+| :--- | :--- |
 | **Disponibilidade** | Tempo que o sistema precisa permanecer acessível (ex: 24/7). |
 | **Continuidade** | Capacidade de recuperação em caso de desastre. |
 | **Desempenho** | Tempo de resposta, carga máxima e eficiência sob estresse. |
@@ -403,7 +403,7 @@ Relacionam-se ao **comportamento do sistema em execução** e à sua capacidade 
 Referem-se à **organização interna do sistema**, qualidade do código e facilidade de manutenção e evolução.
 
 | Termo | Definição |
-|-------|------------|
+| :--- | :--- |
 | **Configuração** | Facilidade com que usuários ou administradores ajustam o sistema. |
 | **Extensibilidade** | Capacidade de adicionar novas funcionalidades sem grandes reestruturações. |
 | **Instalabilidade** | Facilidade de instalação e atualização em diferentes ambientes. |
@@ -419,7 +419,7 @@ Referem-se à **organização interna do sistema**, qualidade do código e facil
 Afetam várias camadas do sistema e influenciam desde o design até a experiência do usuário.
 
 | Termo | Definição |
-|-------|------------|
+| :--- | :--- |
 | **Acessibilidade** | Garantia de acesso a todos os usuários, inclusive com deficiências. |
 | **Armazenamento** | Políticas de retenção, exclusão e arquivamento de dados. |
 | **Autenticação e Autorização** | Controle de identidade e permissões de acesso. |
@@ -485,6 +485,320 @@ Em resumo, o Circuit Breaker ajuda a **proteger aplicações distribuídas** con
 
 ---
 
+## Aula 13/10
+
+### CQRS (Command and Query Responsibility Segregation)
+
+O **CQRS** é um padrão que separa as operações de leitura (Query) das de escrita (Command), resolvendo gargalos do modelo CRUD tradicional onde um banco centralizado atua como ponto único de falha e limitador de performance. Em sistemas transacionais, o modelo clássico sofre com **lock contention** e **deadlocks** (concorrência de dados), além de ficar restrito à **escalabilidade vertical** (limite físico de CPU e memória), um problema comum mesmo em bancos relacionais robustos utilizados por grandes sistemas.
+
+A solução arquitetural do CQRS frequentemente utiliza **réplicas de leitura** para viabilizar a **escalabilidade horizontal**. Nesse modelo, o banco principal (Master) recebe apenas as escritas, enquanto cópias (Read Replicas) atendem às leituras, sendo sincronizadas de maneira **assíncrona** pelo próprio motor do banco (SGBD). Isso elimina a competição por recursos no banco principal, permitindo que o modelo de escrita foque na integridade e o de leitura na velocidade.
+
+Contudo, essa abordagem traz **trade-offs** claros: embora resolva o problema de performance e diminua os deadlocks, ela aumenta significativamente a **complexidade** de implementação e os **custos** de infraestrutura. O principal desafio funcional é a **consistência eventual**, onde o usuário pode receber dados desatualizados (stale data) no breve intervalo entre a escrita no banco principal e a sincronização com a réplica de leitura.
+
+---
+
+### Fundamentos dos Padrões de Arquiteturas
+
+Os padrões de arquitetura oferecem perspectivas sobre como organizar código e implementações, sendo que conceitos antigos, como o de camadas, continuam se manifestando em variantes modernas.
+
+---
+
+#### A Grande Bola de Lama (Big Ball of Mud)
+
+Este "anti-padrão" descreve a ausência de estrutura arquitetural perceptível.
+
+-   **Definição:** Uma confusão de "código espaguete", mal estruturado, que cresceu de forma orgânica e desorganizada com reparos rápidos ("fita adesiva e arame").
+    
+-   **Características:** Compartilhamento indiscriminado de informações, onde dados importantes se tornam globais e duplicados.
+    
+-   **Consequências:** Dificulta a manutenção, testabilidade, escalabilidade e evolução do sistema. Embora arquitetos tentem evitar, é comum devido à falta de governança.
+    
+
+---
+
+#### Arquitetura Unitária
+
+Refere-se ao início da computação, onde hardware e software eram uma entidade única.
+
+-   **Contexto:** Software rodando em um único computador, em uma época sem internet fácil, com distribuição via CDs ou disquetes.
+    
+-   **Simplicidade:** Não exigia compatibilidade com múltiplos sistemas.
+    
+-   **Uso Atual:** Rara hoje em dia, exceto em sistemas embarcados ou ambientes altamente restritos.
+
+-   **Exemplo:** Hoje em dia é utilizado em sistemas de geladeiras, ar-condicionados, máquina de lavar, etc.   
+
+---
+
+#### Cliente/Servidor
+
+Um estilo fundamental que particiona a funcionalidade técnica entre **front-end** e **back-end**, conhecido como arquitetura de duas camadas.
+
+#### 1. Desktop + Servidor de Banco de Dados
+
+-   **Database Centric:** Lógica dividida entre o desktop (apresentação) e o banco de dados (regras pesadas).
+    
+-   **Funcionamento:** Utiliza **Stored Procedures** (trechos de SQL no servidor) para processar dados localmente e evitar tráfego excessivo na rede.
+    
+-   **Exemplo:** Sistemas antigos de grandes empresas (ex: Datasul) em redes locais.
+    
+
+#### 2. Navegador + Servidor Web
+
+A evolução para o desenvolvimento web trouxe novas divisões de responsabilidade.
+
+-   **1ª Geração:** O navegador conecta-se ao servidor web, que concentra a lógica. Havia complexidade devido à incompatibilidade de padrões HTML entre navegadores.
+    
+-   **2ª Geração (Atual):** O servidor web atua como uma **API REST** trafegando JSON. Parte da lógica (validação e interface) passa a rodar no dispositivo do cliente, aliviando o servidor.
+
+---
+
+## Aula 16/10
+
+### Retry Pattern
+
+O padrão **Retry** permite que uma aplicação trate falhas transitórias (temporárias) ao tentar se conectar a um serviço ou recurso de rede, tentando executar a operação novamente de forma transparente.
+
+Embora possa funcionar de forma independente, esse padrão frequentemente atua em conjunto com o **Circuit Breaker**. Enquanto o Retry lida com falhas curtas e transitórias, o Circuit Breaker previne que a aplicação continue tentando uma operação que provavelmente falhará por um longo período.
+
+**Estratégias de Tratamento:** O padrão deve evitar insistir no erro indefinidamente para não desperdiçar recursos ou causar _throttling_ (estrangulamento) no serviço. As três estratégias principais são:
+
+1.  **Cancelar (Cancel):** Se o erro indica que a falha não é transitória (ex: dados inválidos ou falha de autenticação), a aplicação deve abortar a operação imediatamente.
+    
+2.  **Retentar imediatamente (Retry):** Se a falha for incomum ou rara (ex: corrupção de pacote de rede), uma nova tentativa imediata tem alta chance de sucesso.
+    
+3.  **Retentar após atraso (Retry after delay):** Se o erro for causado por sobrecarga ou problemas de conectividade, a aplicação deve esperar. Aqui é comum usar o **Exponential Backoff**, aumentando o tempo de espera a cada tentativa falha para dar folga ao sistema.
+
+### Continuação de Fundamentos dos Padrões de Arquiteturas
+
+### Arquitetura de Três Camadas
+
+Popularizada no final dos anos 1990, essa arquitetura segregava o sistema em camadas físicas e lógicas distintas para facilitar o desenvolvimento distribuído.
+
+-   **Estrutura:** Camada de banco de dados (industrial), camada de aplicação (regras de negócio/servidor de aplicação) e front-end (HTML/JS).
+    
+-   **Protocolos Históricos:** Baseava-se em protocolos de rede como **CORBA** (Common Object Request Broker Architecture) e **DCOM** (Distributed Component Object Model).
+    
+    -   _Nota:_ No CORBA, geravam-se _stubs_ e _skeletons_ para adaptar a comunicação entre linguagens diferentes (ex: Java e C++) em binário através de um Broker. Embora o CORBA tenha caído em desuso, o DCOM ainda tem uso no ecossistema Microsoft.
+
+---
+
+### Arquiteturas Monolíticas vs. Distribuídas
+
+Os estilos arquiteturais dividem-se fundamentalmente em dois grupos:
+
+#### 1. Monolítico
+
+-   **Definição:** Uma única unidade de implementação onde todo o código reside (frequentemente no mesmo repositório).
+    
+-   **Execução:** Roda normalmente como um **único processo**.
+    
+-   **Características:** Alto acoplamento, mas simples de gerenciar inicialmente.
+    
+
+#### 2. Distribuído
+
+-   **Definição:** Várias unidades de implementação conectadas por protocolos de acesso remoto.
+    
+-   **Microserviços:** Utilizados quando o monolito se torna excessivamente complexo. A quebra em partes menores define responsabilidades claras.
+    
+    -   _Técnica de Migração:_ O padrão **Estrangulamento** (Strangler Fig) é usado para migrar gradualmente de monolito para microserviços.
+        
+-   **Trade-offs:** Oferece maior escalabilidade, desempenho e disponibilidade, mas introduz complexidades massivas descritas nas falácias abaixo.
+    
+---
+
+### As 8 Falácias da Computação Distribuída
+
+Termo criado por L. Peter Deutsch, descreve suposições falsas que arquitetos tendem a fazer sobre sistemas distribuídos:
+
+1.  **A Rede é Confiável:** A rede falha. Serviços precisam de _timeouts_ e _circuit breakers_ para lidar com falhas de comunicação.
+    
+2.  **A Latência é Zero:** Chamadas locais (nanossegundos) são infinitamente mais rápidas que remotas (milissegundos).
+    
+3.  **A Largura de Banda é Infinita:** A comunicação entre serviços consome banda.
+    
+    -   _Problema:_ **Stamp Coupling** (retornar dados demais desnecessariamente).
+        
+    -   _Solução Moderna:_ O uso de **gRPC** (como feito pela Netflix) ajuda a mitigar isso transformando JSON em binário (Protobuf), economizando recursos em comparação ao tráfego de texto puro.
+        
+4.  **A Rede é Segura:** A superfície de ataque aumenta drasticamente; cada endpoint precisa ser protegido.
+    
+5.  **A Topologia Nunca Muda:** Redes mudam constantemente (roteadores, upgrades), o que pode invalidar suposições de latência.
+    
+6.  **Existe Apenas Um Administrador:** Em grandes empresas, há múltiplos administradores, exigindo coordenação complexa.
+    
+7.  **O Custo do Transporte é Zero:** Arquiteturas distribuídas são mais caras (gateways, firewalls, servidores adicionais).
+    
+8.  **A Rede é Homogênea:** Equipamentos de diferentes fornecedores (Cisco, Juniper) nem sempre interagem perfeitamente.
+    
+---
+
+### Outros Desafios Distribuídos
+
+-   **Log Distribuído:** Rastrear erros é difícil com logs espalhados. Ferramentas como Splunk são necessárias para consolidação.
+    
+-   **Transações:** O modelo ACID (comum em monolitos) dá lugar ao **BASE** (Basic Availability, Soft state, Eventual consistency).
+    
+    -   A **Consistência Eventual** é o preço pago pela alta disponibilidade.
+        
+    -   **Sagas:** Padrão usado para gerenciar transações longas entre serviços.
+
+---
+
+## Aula 20/10 e 23/10
+
+### Estilo de Arquitetura em Camadas (N-Tier)
+
+A arquitetura em camadas, também conhecida como **N-Tier**, é o estilo mais comum e considerado o "padrão de fato" para a maioria das aplicações. Sua popularidade deve-se à simplicidade, familiaridade e baixo custo.
+
+Este estilo alinha-se naturalmente à **Lei de Conway**, que determina que o design de um sistema tende a copiar a estrutura de comunicação da organização. Como muitas empresas possuem times separados por especialidade (UI, Backend, DBA), a arquitetura acaba refletindo essa divisão em camadas técnicas.
+
+---
+
+### Topologia e Particionamento Técnico
+
+Os componentes são organizados em camadas horizontais lógicas. Diferente de arquiteturas modernas baseadas em domínio (como microsserviços), a arquitetura em camadas utiliza o **particionamento técnico**: os componentes são agrupados pelo que _fazem_ (apresentação vs negócio) e não pelo _assunto_ (cliente, vendas).
+
+A maioria das arquiteturas segue o padrão de 4 camadas:
+
+1.  **Apresentação:** Interface do usuário e lógica do navegador.
+    
+2.  **Negócio (Business):** Regras de negócio e lógica da requisição.
+    
+3.  **Persistência:** Lógica de acesso aos dados (SQL).
+    
+4.  **Banco de Dados:** O armazenamento físico.
+    
+_Nota:_ Aplicações menores podem combinar as camadas de negócio e persistência, resultando em apenas 3 camadas.
+
+---
+
+### Camadas de Isolamento: Abertas vs. Fechadas
+
+O conceito de isolamento permite que alterações em uma camada não afetem as outras (ex: substituir uma interface antiga em **JSF** por **React** sem precisar alterar o banco de dados). Isso é controlado definindo se as camadas são abertas ou fechadas:
+
+-   **Camadas Fechadas (Closed):** Uma requisição deve passar estritamente camada por camada (Apresentação → Negócio → Persistência). Isso garante o isolamento, mas pode gerar excesso de chamadas.
+    
+-   **Camadas Abertas (Open):** Permitem que uma requisição "pule" a camada imediatamente abaixo. Isso melhora a performance, mas aumenta o acoplamento.
+    
+    -   _Exemplo:_ Uma camada de **Serviços Compartilhados** (utilitários) geralmente é aberta para ser acessada por várias outras camadas.
+        
+---
+
+### Antipadrão: Architecture Sinkhole
+
+Ocorre quando as requisições passam por várias camadas sem que nenhuma lógica de negócio ou processamento seja executado, funcionando apenas como um "pass-through" de dados.
+
+-   **Regra 80-20:** É aceitável ter cerca de 20% de requisições "sinkhole". Se 80% das requisições apenas passam dados sem processar regras, a arquitetura em camadas pode ser a escolha errada, pois gera overhead desnecessário de memória e processamento.
+
+---
+
+
+### Benefícios da Arquitetura em Camadas
+
+-   **Custo Geral e Simplicidade (Alta):** São os pontos mais fortes deste estilo. É fácil de desenvolver, entender e manter inicialmente, sendo ideal para projetos com orçamentos apertados e prazos curtos.
+    
+-   **Familiaridade (Alta):** Por ser o padrão "de fato" da indústria, a maioria dos desenvolvedores já conhece a estrutura, o que reduz a curva de aprendizado.
+    
+-   **Alinhamento Organizacional:** Segue a **Lei de Conway**, encaixando-se naturalmente em empresas divididas por times técnicos (Front-end, Back-end, DBA).
+    
+
+### Desafios e Limitações
+
+-   **Implementabilidade (Muito Baixa):** O processo de _deploy_ é arriscado e lento ("cerimônia de deploy"). Uma alteração simples de três linhas de código exige que a aplicação inteira seja retestada e reimplantada.
+    
+-   **Escalabilidade e Elasticidade (Muito Baixa):** O sistema cresce como um bloco único (quantum = 1). Não é possível escalar apenas uma funcionalidade específica (ex: escalar só o módulo de vendas); é necessário escalar a aplicação inteira.
+    
+-   **Tolerância a Falhas (Muito Baixa):** Não há isolamento de falhas. Se uma camada sofrer um erro fatal (como falta de memória), toda a aplicação cai, afetando todas as funcionalidades.
+    
+-   **Desempenho (Baixa):** Pode ser prejudicado pelo _overhead_ de passar por múltiplas camadas sem necessidade (antipadrão _Sinkhole_) e pela falta de suporte nativo a processamento paralelo.
+    
+-   **Evolutiva (Baixa):** O alto acoplamento entre as camadas torna refatorações difíceis e caras, reduzindo a agilidade do time para responder a mudanças de mercado.
+    
+
+### Quando Usar
+
+-   Indicada para **aplicações pequenas e simples**, sites institucionais ou quando o time tem **pouco tempo e orçamento**.
+    
+-   É um bom ponto de partida quando **não se tem certeza** sobre qual arquitetura usar, pois é fácil de migrar para estilos mais complexos depois, desde que se mantenha a modularidade.
+
+---
+
+## Aula 27/10 e 30/10
+
+
+### Estilo de Arquitetura Pipeline (Pipes-and-Filters)
+
+A arquitetura Pipeline é um padrão fundamental que remonta às origens do **Unix**, sendo o princípio por trás de shells de terminal como Bash e Zsh. Embora seja uma arquitetura clássica, hoje ela ganha muita força nas áreas de **Ciência e Engenharia de Dados**, onde o processamento de grandes volumes de informação exige etapas claras e sequenciais.
+
+A filosofia central é dividir a funcionalidade em partes distintas e "super especialistas": em vez de escrever um programa monolítico que faz tudo, cria-se um conjunto de pequenos programas onde cada um realiza **uma única tarefa muito bem feita**.
+
+---
+
+### Topologia
+
+A estrutura consiste em dois elementos principais que se coordenam de forma unidirecional: **Canais (Pipes)** e **Filtros (Filters)**.
+
+#### 1. Canais (Pipes)
+
+Formam o meio de comunicação entre os filtros.
+
+-   **Unidirecionais:** O fluxo vai sempre de um ponto a outro (ponto a ponto), nunca em _broadcast_, para garantir alto desempenho.
+    
+-   **Payload:** Podem transportar qualquer formato de dados, mas arquitetos preferem quantidades menores de dados (payloads leves) para performance.
+    
+-   **Função:** Conectar a saída (`stdout`) de um módulo à entrada (`stdin`) do próximo [resumo fornecido].
+    
+
+#### 2. Filtros (Filters)
+
+São módulos autônomos, independentes e **sem estado** (stateless).
+
+-   **Especialização:** Devem realizar apenas uma tarefa. Tarefas complexas (compostas) devem ser quebradas em uma sequência de vários filtros.
+    
+-   **Tipos de Filtros:**
+    
+    1.  **Produtor (Source):** Ponto de partida. Apenas gera saída.
+        
+    2.  **Transformador (Map):** Aceita entrada, transforma os dados e encaminha. É o equivalente ao "Map" em modelos funcionais/MapReduce.
+        
+    3.  **Verificador (Reduce):** Testa critérios e pode reduzir o volume de dados. Equivalente ao "Reduce".
+        
+    4.  **Consumidor (Sink):** Ponto final. Persiste o resultado em um banco ou exibe na tela (UI).
+
+---
+
+### Benefícios da Arquitetura Pipeline
+
+-   **Simplicidade e Baixo Custo (Alta):** São os recursos mais fortes deste estilo. Por ser uma arquitetura monolítica (Quantum = 1), ela elimina a complexidade de redes e sistemas distribuídos, tornando-se barata para construir e fácil de entender.
+    
+-   **Modularidade (Média):** A divisão clara entre filtros (Produtor, Transformador, Verificador, Consumidor) permite o isolamento de preocupações. É possível substituir ou modificar a lógica de um filtro específico sem quebrar o restante do sistema.
+    
+
+### Desafios e Limitações
+
+-   **Escalabilidade e Elasticidade (Muito Baixa):** Como o sistema roda como uma unidade única, não é possível escalar apenas um filtro "pesado". Para crescer, é necessário escalar a aplicação inteira ou recorrer a complexidades como _multithreading_ manual.
+    
+-   **Tolerância a Falhas (Muito Baixa):** Não há isolamento real de falhas. Se um único filtro causar um estouro de memória ou travar, todo o processo do pipeline é encerrado, derrubando a aplicação.
+    
+-   **Implementabilidade e Testabilidade (Média/Baixa):** Embora seja melhor que a arquitetura em camadas devido à modularidade dos filtros, ainda sofre com os riscos de um monolito: qualquer alteração pequena exige o teste e o _deploy_ da aplicação completa.
+    
+-   **Desempenho (Baixa):** Frequentemente baixo devido à natureza sequencial e monolítica, sem aproveitamento nativo de paralelismo distribuído.
+    
+
+### Quando Usar
+
+-   Este estilo é indicado para sistemas que requerem **processamento sequencial de dados** (ETL, scripts, orquestração simples) onde o **baixo custo** e a **facilidade de manutenção** são prioritários em relação à alta disponibilidade ou escala massiva.
+
+---
+
+## Aula 03/11 e 06/11
+
+
+
+---
+
 ## Anotações Pessoais e Tópicos Extras
   - Grafos ;
   - SAP ABAP ;
@@ -503,6 +817,20 @@ Em resumo, o Circuit Breaker ajuda a **proteger aplicações distribuídas** con
   - **Ciclo PDCA**, ciclo de melhoria contínua ;
   - **Polling** é o processo de consultar e buscar mensagens repetidamente ;
   - **Buffer** é um lugar onde armazena dados temporariamente até serem requisitados.
+  - **Processo**: é um serviço em execução. Um monolito é executado normalmente como um único processo;
+  - **O que é um Broker?**: Em programação, um broker é um intermediário que gerencia a comunicação entre diferentes componentes ou serviços, comum em sistemas de mensagens e arquiteturas como CORBA;
+  - **Dapr (Distributed Application Runtime)**: Um runtime que facilita a construção de microsserviços. É agnóstico de linguagem;
+  - **Sidecar (Dapr)**: Padrão onde um processo auxiliar roda ao lado da aplicação principal para prover funcionalidades de infraestrutura (como comunicação segura ou estado) sem acoplar isso ao código da aplicação;
+  - **gRPC**: Framework RPC de alto desempenho que usa Protobuf (binário) ao invés de JSON, otimizando a comunicação entre serviços. Foi utilizado pela Netflix para reduzir o custo do seu serviço na AWS.
+  - **Stdin (Standard Input)**: Fluxo de entrada padrão de informações. Pode vir de um teclado, um arquivo de texto ou da saída de outro programa;
+  - **Stdout (Standard Output)**: Saída padrão dos caracteres (resultado do processamento);
+  - **POSIX**: Padrão criado no Unix que define essas interfaces (como stdin/stdout) para garantir a compatibilidade entre sistemas operacionais;
+  - **Uso em Dados**: A arquitetura pipeline é a base de ferramentas modernas de ETL e Big Data, onde dados brutos entram (Produtor), sofrem limpeza e formatação (Transformador/Verificador) e são salvos em um Data Warehouse (Consumidor);
+  - **Comando com Pipe no Terminal Linux (`|`)**: é a implementação prática da arquitetura pipeline, conectando a saída (`stdout`) de um comando à entrada (`stdin`) do próximo. Exemplo: `ps ax | grep -i java | tail`. Onde `ps ax` lista os processos, `grep -i java` filtra a lista procurando por "java" e o `tail` exibe apenas as **últimas linhas** do resultado (útil para listas muito grandes);
+  - **curl**: ferramenta de linha de comando (CLI) usada para transferir dados de ou para um servidor, suportando diversos protocolos (HTTP, HTTPS, FTP, etc.). É extremamente utilizada para testar APIs REST, permitindo enviar requisições (GET, POST, etc.) e visualizar o retorno diretamente no terminal;
+  - **Apache Kafka**: plataforma distribuída de streaming de eventos. Funciona como um sistema de mensagens de alta performance (modelo _publish/subscribe_) projetado para lidar com grandes volumes de dados em tempo real. Seus principais componentes são: **Producer** (quem envia os dados), **Consumer** (quem lê os dados), **Topic** (categoria ou canal onde as mensagens são organizadas) e **Broker** (o servidor que armazena e gerencia essas mensagens). É amplamente utilizado para desacoplar sistemas e construir pipelines de dados robustos;
+
+---
 
 **Notas importantes:**  
 - Herança (`extends`) = seta vazada sem pontilhado ;
@@ -522,3 +850,8 @@ Em resumo, o Circuit Breaker ajuda a **proteger aplicações distribuídas** con
 - *Aprenda Domain-driven Design: Alinhando Arquitetura de Software e Estratégia de Negócios*
 - [Introdução a DevOps - Microsoft](https://learn.microsoft.com/pt-br/training/modules/introduction-to-devops/2-what-is-devops?ns-enrollment-type=learningpath&ns-enrollment-id=learn.wwl.az-400-work-git-for-enterprise-devops)
 - [Circuit Breaker pattern - Microsoft](https://learn.microsoft.com/en-us/azure/architecture/patterns/circuit-breaker)
+- [CQRS pattern - Microsoft](https://learn.microsoft.com/en-us/azure/architecture/patterns/cqrs)
+- [Retry pattern - Microsoft](https://learn.microsoft.com/en-us/azure/architecture/patterns/retry)
+- [Arquitetura de software: as partes difíceis](https://app.minhabiblioteca.com.br/reader/books/9788550819891/epubcfi/6/2[%3Bvnd.vst.idref%3Dcover]!/4/2/2%4071:54)
+
+- [Node-RED - Low-code programming for event-driven applications](https://nodered.org/)
